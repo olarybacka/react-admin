@@ -1,12 +1,13 @@
 import { actionTypes } from './actions'
 
 type Action = {
-  type: string,
+  type: string
   payload: any
 }
-export type RootState = {
-  users: User[]
+export type UserState = {
+  usersList: User[]
 }
+
 export type User = {
   id: number
   name: string
@@ -17,17 +18,26 @@ export type User = {
   }
 }
 
-export const usersReducer = (state: RootState, { type, payload }: Action) => {
+const initialState: UserState = {
+  usersList: []
+}
+
+export const usersReducer = (
+  state: UserState = initialState,
+  { type, payload }: Action,
+) => {
   switch (type) {
     case actionTypes.updateUser:
       return {
         ...state,
-        users: {...state.users, payload}
+        usersList: { ...state, payload },
       }
-      case actionTypes.setUsers:
-        return {
-          ...state,
-          users: payload
-        }
+    case actionTypes.setUsers:
+      return {
+        ...state,
+        usersList: [...payload],
+      }
+    default:
+      return state
   }
 }

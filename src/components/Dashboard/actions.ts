@@ -1,4 +1,5 @@
 import { User } from './reducer'
+import { Dispatch } from 'redux'
 
 export const actionTypes = {
   updateUser: 'UPDATE_USER',
@@ -10,7 +11,17 @@ export const updateUser = (user: User) => ({
   user,
 })
 
-export const setUsers = (users: User[]) => ({
-  type: actionTypes.setUsers,
-  users,
-})
+export const getUsers = () => async (dispatch: Dispatch) => {
+  const users: User[] = await fetch(
+    'https://jsonplaceholder.typicode.com/users',
+  ).then((response) => response.json())
+
+  dispatch(setUsers(users))
+}
+
+export const setUsers = (users: User[]) => {
+  return {
+    type: actionTypes.setUsers,
+    payload: users,
+  }
+}
