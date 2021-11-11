@@ -13,9 +13,6 @@ export type User = {
   name: string
   username: string
   email: string
-  address: {
-    city: string
-  }
 }
 
 const initialState: UserState = {
